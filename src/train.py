@@ -111,3 +111,6 @@ def main():
            save_checkpoint(checkpoint, filename=LOAD_MODEL_FILE)
 
         train_fn(train_loader, model, optimizer, loss_fn)
+
+if __name__ == "__main__":
+    main()
