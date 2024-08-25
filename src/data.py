@@ -1,6 +1,6 @@
 import torch
 import os
-import panda as pd
+import pandas as pd
 from PIL import Image
 
 class VOCDataset(torch.utils.data.Dataset):
@@ -10,7 +10,7 @@ class VOCDataset(torch.utils.data.Dataset):
                  label_dir,
                  S=7,
                  B=2,
-                 C=20,
+                 C=1,
                  transform=None):
         self.annotations = pd.read_csv(csv_file)
         self.img_dir = img_dir
@@ -52,11 +52,11 @@ class VOCDataset(torch.utils.data.Dataset):
                 h * self.S
             )
 
-            if label_matrix[i, j, 20] == 0:
-                label_matrix[i, j, 20] = 1
+            if label_matrix[i, j, 1] == 0:
+                label_matrix[i, j, 1] = 1
                 box_coordinates = torch.tensor(
                     [x_cell, y_cell, width_cell, height_cell]
                 )
-                label_matrix[i, j, 21:25] = box_coordinates
+                label_matrix[i, j, 2:6] = box_coordinates
                 label_matrix[i, j, class_label] = 1
         return image, label_matrix
